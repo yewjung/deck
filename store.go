@@ -36,10 +36,13 @@ func DrawFrom(deckId string) (uint64, Card, error) {
 		return 0, Card{}, err
 	}
 	newDeck, card, err := DrawCard(deck)
+	if err != nil {
+		return 0, Card{}, err
+	}
 	if newDeck == 0 {
-		decks.del(deckId)
+		err = decks.del(deckId)
 	} else {
-		decks.set(deckId, newDeck)
+		err = decks.set(deckId, newDeck)
 	}
 	return deck, card, err
 }
@@ -83,14 +86,14 @@ func (d *Decks) has(deckId string) (bool, error) {
 
 func init() {
 	locksClient = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6378", // Replace with your Redis server address and port
-		Password: "",               // Set if Redis requires authentication
-		DB:       0,                // Specify the Redis database
+		Addr:     "locks:6379", // Replace with your Redis server address and port
+		Password: "",           // Set if Redis requires authentication
+		DB:       0,            // Specify the Redis database
 	})
 	decks.store = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6377", // Replace with your Redis server address and port
-		Password: "",               // Set if Redis requires authentication
-		DB:       0,                // Specify the Redis database
+		Addr:     "decks:6379", // Replace with your Redis server address and port
+		Password: "",           // Set if Redis requires authentication
+		DB:       0,            // Specify the Redis database
 	})
 }
 

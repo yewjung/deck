@@ -15,6 +15,11 @@ func main() {
 	})
 	app.Get("/card", func(c *fiber.Ctx) error {
 		deckId := c.Query("deckid")
+		if deckId == "" {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": DECK_ID_IS_EMPTY,
+			})
+		}
 		_, card, err := DrawFrom(deckId)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

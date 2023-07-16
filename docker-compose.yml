@@ -1,11 +1,16 @@
 version: '3'
 services:
+  deck:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    restart: on-failure:5
+    ports:
+      - 8080:8080
+    depends_on:
+      - locks
+      - decks
   locks:
     image: redis
-    ports:
-      - 6378:6379
-
   decks:
     image: redis
-    ports:
-      - 6377:6379
