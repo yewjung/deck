@@ -19,6 +19,14 @@ const lockIdLen = 6
 const maxLockRetry = 3
 
 func DrawFrom(deckId string) (uint64, Card, error) {
+	// check if decks exists
+	exists, err := decks.has(deckId)
+	if err != nil {
+		return 0, Card{}, err
+	}
+	if !exists {
+		return 0, Card{}, fmt.Errorf(fmt.Sprintf(DECK_DONT_EXIST, deckId))
+	}
 	// acquiring lock
 	lockId, ok := acquireLock(deckId)
 	if !ok {
