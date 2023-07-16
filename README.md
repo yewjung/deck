@@ -72,12 +72,3 @@ This project relies on the following dependencies:
 
 Make sure you have these dependencies installed on your system before running the project.
 
-## Contributing
-
-Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue on the [GitHub repository](https://github.com/your-username/deck-of-cards-api). You can also submit pull requests with proposed changes.
-
-When contributing, please ensure that your code follows the existing coding style and conventions. Include appropriate tests for your changes to maintain the code quality.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code as per the terms of the license.
