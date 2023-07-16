@@ -23,7 +23,7 @@ To run this project on your local computer, follow these steps:
 
    This command will build and run the necessary containers defined in the `docker-compose.yml` file.
 
-4. Once the containers are up and running, the API will be accessible at `http://localhost:8000`.
+4. Once the containers are up and running, the API will be accessible at `http://localhost:8080`.
 
 ## API Endpoints
 
