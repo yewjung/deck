@@ -1,4 +1,4 @@
-# Deck of Cards API
+# Deck API
 
 This is a public API built in Go that allows you to create a new deck and draw cards from it. The API provides two endpoints: `/newdeck` and `/card`.
 
@@ -8,12 +8,12 @@ To run this project on your local computer, follow these steps:
 
 1. Clone this repository using the following command:
    ```
-   git clone <repository_url>
+   git clone https://github.com/yewjung/deck.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd deck-of-cards-api
+   cd deck
    ```
 
 3. Start the Docker containers using `docker-compose`:
