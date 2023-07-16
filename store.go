@@ -26,6 +26,7 @@ func DrawFrom(deckId string) (uint64, Card, error) {
 		Logger.Error(msg)
 		return 0, Card{}, errors.New(msg)
 	}
+	// release lock
 	defer releaseLock(deckId, lockId)
 
 	// drawing card
@@ -101,14 +102,16 @@ func acquireLock(deckId string) (string, bool) {
 	for attempt < maxLockRetry {
 		result, err := locksClient.SetNX(context.Background(), getLockName(deckId), lockId, time.Second*2).Result()
 		if err != nil {
-			Logger.Error("Attempt %d: Failed to execute SetNX - %s\n", attempt, err)
+			Logger.Errorf("Attempt %d: Failed to execute SetNX - %s\n", attempt, err)
 		} else if !result {
-			Logger.Error("Attempt %d: Key %s already exists\n", attempt, deckId)
+			Logger.Errorf("Attempt %d: Key %s already exists\n", attempt, deckId)
+		} else {
+			return lockId, true
 		}
 		time.Sleep(time.Millisecond)
 		attempt += 1
 	}
-	return lockId, attempt == maxLockRetry
+	return lockId, false
 }
 
 func releaseLock(deckId, lockId string) error {
