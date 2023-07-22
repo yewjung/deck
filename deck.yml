@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deck-deployment
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: deck
+  template:
+    metadata:
+      labels:
+        app: deck
+    spec:
+      imagePullSecrets:
+        - name: my-dockerhub-secret
+      containers:
+      - name: deck
+        image: yewjung/deck:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deck-service
+  namespace: dev
+spec:
+  type: LoadBalancer
+  selector:
+    app: deck
+  ports:
+  - port: 8080
+    targetPort: 8080
+

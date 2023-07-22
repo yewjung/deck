@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-locks-deployment
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: redis-locks
+  template:
+    metadata:
+      labels:
+        app: redis-locks
+    spec:
+      containers:
+      - name: redis-locks
+        image: redis
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-locks-service
+  namespace: dev
+spec:
+  selector:
+    app: redis-locks
+  ports:
+  - port: 6379
+    targetPort: 6379
+
