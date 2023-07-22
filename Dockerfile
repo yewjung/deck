@@ -5,13 +5,13 @@ FROM golang:1.19.0-bullseye
 WORKDIR /usr/src/app
 
 # Copy the Go module files
-COPY go.mod go.sum ./
+COPY ./app/go.mod ./app/go.sum ./
 
 # Download and install the project dependencies
 RUN go mod download
 
 # Copy the source code into the container
-COPY . .
+COPY ./app .
 
 # Build the Go application
 RUN go build -v -o /usr/local/bin ./...
